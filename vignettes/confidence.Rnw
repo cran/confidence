@@ -1,0 +1,278 @@
+\documentclass[10pt]{article}
+
+<<ini, echo=FALSE, results='hide', message=FALSE>>=
+library(confidence)
+library(knitr)
+library(xtable)
+@
+
+
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{Confidence-package: An Introduction}
+%\VignetteKeyword{confidence}
+%\VignettePackage{confidence}
+
+
+
+% page lay-out
+\usepackage[margin=25.4mm,a4paper]{geometry}
+
+% color (and colortbl)
+\usepackage[table]{xcolor}
+
+% graphics
+\usepackage{graphicx}
+
+% font for sections and chapters
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+% hyper links
+\usepackage{hyperref}
+
+% indentation
+\setlength\parindent{0pt}
+
+% sideways tables
+\usepackage{rotating}
+
+
+% macros
+\newcommand{\R}{\textsf{R}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\pkg}[1]{\textbf{#1}}
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+
+
+% title
+\title{Confidence package: An introduction}
+
+\author{
+    Dennis J.J. Walvoort\\
+    {\small\it Alterra -- Wageningen University \& Research Center}\\
+    {\small\it Wageningen, The Netherlands;}
+    {\small\it e-mail: \tt dennis.walvoort@wur.nl}\\ \smallskip
+    \and
+    Willem M.G.M van Loon\\ 
+    {\small\it Rijkswaterstaat Water, Transport and Living Environment;}
+    {\small\it Department of Information Management}\\
+    {\small\it Lelystad, The Netherlands;}
+    {\small\it e-mail: \tt willem.van.loon@rws.nl}\\ \smallskip
+}
+
+\date{\Sexpr{packageDescription("confidence", fields = "Date")}}
+
+\hypersetup{
+    %pdfstartpage = 1,
+    %pdfstartview = XYZ 0 0 1,
+    bookmarksopen = true,
+    bookmarksnumbered = true,
+    pdftitle = {confidence-package: Introduction},
+    pdfauthor = {\textcopyright\ Dennis J.J. Walvoort \& Willem M.G.M. van Loon},
+    pdfsubject = {},
+    pdfkeywords = {},
+    colorlinks = true,
+    linkcolor = gray,
+    citecolor = gray,
+    filecolor = gray,
+    urlcolor = gray
+}
+
+
+
+\begin{document}
+
+\maketitle
+
+% alternating row colors
+\rowcolors{2}{blue!5}{white}
+
+
+<<echo=FALSE>>=
+opts_chunk$set(
+    comment = NA,
+    quiet = TRUE,
+    progress = FALSE,
+    tidy = FALSE,
+    cache = FALSE,
+    message = FALSE,
+    error = TRUE,
+    warning = TRUE
+)
+@
+
+
+\hrule
+
+\tableofcontents
+
+\bigskip
+\hrule
+
+\section{Introduction}
+
+This tutorial provides a brief introduction to the \pkg{confidence}-package. This package can be used to estimate the confidence of state classifications (\eg, with the classification `bad', `moderate', `good') produced using environmental indicators and associated targets. The implementation closely follows Baggelaar \textit{et al.} (2010) where confidence intervals for the estimated multiyear averages are derived by assuming a Student's $t$ distribution for the errors.
+
+\section{Input data \label{sec:input}}
+
+As input, the tool needs a table containing annual arithmetic average concentrations of chemical parameters or ecological quality ratio's (EQRs). An example of such a table is given below. In this tutorial, required column names are given in upper-case, and optional column names in lower-case. The tool itself treats column names case-insensitive to minimize the risk of errors by users unfamiliar with case-sensitive software. Users are free to add additional columns. These will be ignored by the tool.
+
+<<results='asis', echo=FALSE>>=
+data(metal)
+metal$sampdev <- NULL
+metal$char <- NULL
+metal$comp <- NULL
+print(
+    xtable(x = metal), 
+    include.rownames = FALSE,
+    size = "footnotesize",
+    add.to.row = list(list(-1), "\\rowcolor{blue!15}")
+)
+@
+
+The following columns need to be specified (the order of the columns is irrelevant)
+\begin{description}
+    \item[OBJECTID]\hfill \\
+        unique identifier of a waterbody, \eg, NL89I\_os;
+    \item[PAR]\hfill \\
+        parameter name, \eg, Cadmium or BEQI2;
+    \item[YEAR] \hfill \\
+        year expressed as a four-digit integer (YYYY);
+    \item[VALUE] \hfill \\
+        annual average value of \code{PAR};
+    \item[TARGET] \hfill \\
+        the target value for \code{PAR}, \eg, the target value according to the European Water Framework Directive, or any other used environmental target;
+    \item[UNIT] \hfill \\
+        the measurement unit of \code{PAR}. This unit should be the same for all records with the same \code{PAR} and pertains to both \code{VALUE} and \code{TARGET};
+    \item[transform] \hfill \\
+        data transformation applied to column \code{VALUE}. Allowed transformations are \code{log} and \code{logit}. In case no transformation is required, this field should either be omitted or contain one of the following synonyms: \code{NA}, \code{none}, or \code{identity};
+    \item[color] \hfill \\
+        The fill colors in the density plot to the left and right of \code{TARGET}. The following values are allowed: either \code{green/orange} or \code{orange/green}. The former is the default in case the color-column is missing.
+\end{description}
+
+
+
+
+
+\section{Running the tool}
+
+The easiest way to execute the tool is by typing
+
+<<eval=FALSE, prompt=TRUE>>=
+conf()
+@
+
+
+on the R-prompt. This will launch an interactive file selection dialogue that asks for the name of the comma separated values file (CSV) containing the input data. The format of this file is given in Section~\ref{sec:input}. After checking the contents of this file, the tool will estimate for each \code{OBJECTID} and \code{PAR}, the multiyear average of \code{VALUE}, the probability that this average exceeds \code{TARGET}, and the 90\% confidence interval of this average. These results are reported as an HTML-document and a CSV-file. Both are stored in the same directory as the input file in a directory called `output' with the current date-time stamp as postfix. This should prevent accidentally overwriting previous results. For example, if the name of the input file is
+
+<<eval=FALSE>>=
+"my_directory/my_input_file.csv"
+@
+
+then the names of the output files will be:
+
+<<eval=FALSE>>=
+"my_directory/outputYYYYmmddHHMMSS/output.csv"
+"my_directory/outputYYYYmmddHHMMSS/output.html"
+@
+The first output file contains all results in CSV-format:
+\begin{description}
+\item
+\end{description}
+The second file is an HTML-report of the analysis, and will be automatically launched in a web browser.
+
+As an alternative, one may enter the filename directly
+<<eval=FALSE, prompt=TRUE>>=
+conf("my_directory/my_input_file.csv")
+@
+This option may be convenient in case many input files have to be analysed. Suppose the names of these files have been stored in a character vector with the name \code{filenames}, then each file can be processed by running the following code:
+
+<<eval=FALSE, prompt=TRUE>>=
+for (filename in filenames) {
+    conf(filename)
+}
+@
+
+Apart from input files, the tool can also process \code{data.frame}s. This option is very convenient when the input data are not available in an external CSV-file but are for instance stored in a database. In that case, the user has to run an SQL-query in \R\ that results in a \code{data.frame} that complies with the format in Section~\ref{sec:input}. This \code{data.frame} can then be directly processed by the tool, circumventing the need to create external CSV-files.
+
+<<eval=FALSE, prompt=TRUE>>=
+conf(my_data.frame)
+@
+The results will be stored in the current working directory.
+
+
+
+
+
+
+
+\section{Results}
+
+In this section, the results will be presented that have been produced by running the tool on the DCA data set. This data set has been shipped with the \pkg{confidence}-package and is given in the table below:
+<<results='asis', echo=FALSE>>=
+data(DCA)
+print(
+    xtable(x = DCA), 
+    include.rownames = FALSE,
+    size = "footnotesize",
+    add.to.row = list(list(-1), "\\rowcolor{blue!15}")
+)
+@
+
+Applying the \code{conf}-function to these data results in an HTML-document with the following table:
+
+<<results='asis', echo=FALSE>>=
+x <- mya(conf_input(x=DCA))
+print(
+    xtable(x = as.data.frame(x)), 
+    include.rownames = FALSE,
+    size = "footnotesize",
+    add.to.row = list(list(-1), "\\rowcolor{blue!15}")
+)
+@
+
+This table gives for each \code{OBJECTID}, \code{PAR}, and \code{PERIOD}, the multiyear average (\code{MYA}), the lower bound (\code{q05}) and upper bound (\code{q95}) of the confidence interval of \code{MYA}, and the probability that \code{MYA} is greater (\code{PROB\_gt}) or less (\code{PROB\_lt}) than \code{TARGET}. These data are also given in the figure below.
+
+<<dev='pdf',fig.width=7, fig.height=4, out.width='0.8\\textwidth', echo=FALSE>>=
+plot(x)
+@
+
+
+
+\section{Sample data}
+
+The package ships with three sample datasets. The user may wish to analyse these data in order to get familiar with the tool. These datasets are:
+\begin{description}
+    \item[metal]: simulated (\textit{in silico}) metal contents in two arbitrary rivers for the period 2011-2015;
+    \item[DCA]: data presented by Baggelaar \textit{et al.} (2010) representing annual average 1,2-dichloroethane concentrations in a specific waterbody for the years 2006, 2007, and 2008;
+    \item[EQR]: data presented by Baggelaar \textit{et al.} (2010) representing ecological quality ratio's for macrofauna in a specific waterbody for the years 2003, 2006, and 2009.
+\end{description}
+
+The following annotated code block illustrates how to load the \code{EQR} dataset:
+
+<<prompt=TRUE>>=
+
+# load confidence package
+# Note: this has to be done only once, at the start of an R session
+library(confidence)
+
+# load ecological quality ratio's
+data(EQR)
+
+# print these data to the screen
+EQR
+@
+
+The other sample data sets can be loaded in a similar way.
+
+
+
+
+\section{References}
+
+Baggelaar, P., O. van Tongeren, R. Knoben, and W. van Loon, 2010. Rapporteren van de betrouwbaarheid van KRW-beoordelingen (in Dutch, English translation: Reporting the accuracy of WFD-assessments). H$_2$O 16: 21--25
+
+
+
+\end{document}

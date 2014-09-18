@@ -1,0 +1,85 @@
+```{r echo=FALSE}
+opts_chunk$set(
+    echo = FALSE,
+    comment = NA,
+    quiet = TRUE,
+    progress = FALSE,
+    tidy = FALSE,
+    cache = FALSE,
+    dpi = 300,
+    fig.path = "",
+    message = FALSE,
+    error = FALSE, # FALSE: do not preserve errors. Always stop execution.
+    warning = TRUE
+)
+options(width = 110)
+```
+
+
+# Confidence estimates of state classifications produced using environmental indicators and associated targets
+
+
+## General settings
+
+_**`r packageDescription("confidence", fields = "Package")`** package version `r packageDescription("confidence", fields = "Version")` (`r packageDescription("confidence", fields = "Date")`)_
+- Time stamp: `r format(Sys.time())` 
+- Output directory: `r outputDir`
+
+
+## Summary of inputs
+- Number of records (NAs have been removed): `r nrow(x)`
+- Number of object identifiers (OBJECTID) : `r length(unique(x$OBJECTID))`
+- Number of parameters (PAR): `r length(unique(x$PAR))`
+- Transformation(s): `r toString(unique(x$TRANSFORM))`
+
+
+## Results
+
+The table below gives for each object identifier and parameter:
+
+1. the multi-year arithmetic average (MYA);
+1. the probability (PROB_lt) that MYA is less than the target value (TARGET);
+1. the probability (PROB_gt) that MYA is greater than the target value (TARGET);
+1. the lowerbound (q05) and upperbound (q95) of the 90% confidence interval of MYA
+
+```{r, results='asis'}
+mya <- mya(x)
+print(xtable(as.data.frame(mya)), type = "html", include.rownames = FALSE)
+```
+
+The figure(s) below give(s) the confidence distribution(s) for parameters in specified water bodies and periods. These three metadata are printed in the header of each figure. The vertical red line indicates the target (TARGET) for a specified parameter. The probability that the true multi-year average (MYA) lies above or below the target is presented as percentages in the graph (respectively to the right and left of the vertical red line).
+
+
+```{r }
+out <- character()
+for (i in 1:nrow(mya)) {
+    out <- c(out,  knit_child(
+        text = sprintf(
+            fmt = "```{r %s, fig.width=7, fig.height=4, out.width=600}\nplot(mya, which=%s)\n```",
+            sanitize(paste("fig", mya$OBJECTID[i], mya$PAR[i], mya$PERIOD[i], sep = "_")), 
+            i
+        )
+    ))
+}
+```
+
+`r out`
+
+
+---
+
+
+
+## References
+
+Baggelaar, P., O. van Tongeren, R. Knoben, & W. van Loon, 2010. Rapporteren van de betrouwbaarheid van KRW-beoordelingen (in Dutch, English translation: Reporting the accuracy of WFD-assessments). H2O 16, p.21--25
+
+
+---
+
+
+## Session information 
+
+```{r}
+sessionInfo()
+```
