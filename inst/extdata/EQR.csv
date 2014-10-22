@@ -1,0 +1,4 @@
+"OBJECTID","PAR","color","char","comp","sampdev","YEAR","VALUE","TARGET","UNIT","transform"
+"waterbody x","EQR","orange/green",,"water",,"2003","0.10",0.6,"NODIM","logit"
+"waterbody x","EQR","orange/green",,"water",,"2006","0.24",0.6,"NODIM","logit"
+"waterbody x","EQR","orange/green",,"water",,"2009","0.19",0.6,"NODIM","logit"

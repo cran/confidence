@@ -254,8 +254,8 @@ conf_input <- function(x) {
 #' @return a \code{\link{data.frame}} with the following columns:
 #' \itemize{
 #'     	\item{\code{MYA}: }{the multi-year arithmetic average;}
-#'  	\item{\code{PROB_lt}: }{the probability that \code{MYA} is less than the target value specified;}
-#'  	\item{\code{PROB_gt}: }{the probability that \code{MYA} is greater than the target value specified;}
+#'  	\item{\code{PROB_LTT}: }{the probability that \code{MYA} is less than the target value specified;}
+#'  	\item{\code{PROB_GTT}: }{the probability that \code{MYA} is greater than the target value specified;}
 #'      \item{\code{q05}: }{the lowerbound of the 90\% confidence interval of \code{MYA}}
 #'      \item{\code{q95}: }{the upperbound of the 90\% confidence interval of \code{MYA}}
 #'  }
@@ -320,8 +320,8 @@ mya.conf_input <- function(x, ...) {
     x$q95    <- mapply(FUN = backtransform, x = x$q95_t,    type = x$TRANSFORM)
 
     # add Prob(VALUE > TARGET) and Prob(VALUE <= TARGET)
-    x$PROB_gt <- x$PROB
-    x$PROB_lt <- 1.0 - x$PROB
+    x$PROB_GTT <- x$PROB
+    x$PROB_LTT <- 1.0 - x$PROB
     x$PROB <- NULL
     
     # return result
@@ -333,7 +333,7 @@ mya.conf_input <- function(x, ...) {
 as.data.frame.mya <- function(x, ...) {
     class(x) <- "data.frame"
     x[c("OBJECTID", "PAR", "PERIOD", "MYA", "TARGET", 
-         "PROB_lt", "PROB_gt", "q05", "q95")]
+         "PROB_LTT", "PROB_GTT", "q05", "q95")]
 }
 
 
@@ -397,7 +397,7 @@ plot.mya <- function(x, which, ...) {
             MYA = c(MYA_l[1], MYA_l, MYA_l[n_l]), 
             density = c(0, dt(x = t01_l, df = x$df), 0),
             TARGET = x$TARGET,
-            PROB = x$PROB_gt,
+            PROB = x$PROB_GTT,
             PERIOD = x$PERIOD
         ),
         data.frame(
@@ -407,7 +407,7 @@ plot.mya <- function(x, which, ...) {
             MYA = c(MYA_r[1], MYA_r, MYA_r[n_r]), 
             density = c(0, dt(x = t01_r, df = x$df), 0),
             TARGET = x$TARGET,
-            PROB = x$PROB_gt,
+            PROB = x$PROB_GTT,
             PERIOD = x$PERIOD
         )
     )

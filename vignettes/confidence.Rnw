@@ -114,6 +114,82 @@ opts_chunk$set(
 
 This tutorial provides a brief introduction to the \pkg{confidence}-package. This package can be used to estimate the confidence of state classifications (\eg, with the classification `bad', `moderate', `good') produced using environmental indicators and associated targets. The implementation closely follows Baggelaar \textit{et al.} (2010) where confidence intervals for the estimated multiyear averages are derived by assuming a Student's $t$ distribution for the errors.
 
+
+
+\section{Installation instructions}
+
+\subsection{Installation of \R}
+
+<<echo=FALSE>>=
+rversion <- sub(
+    pattern = "R *\\(>= *([^)]*)\\).*", 
+    replacement = "\\1", 
+    x = packageDescription("confidence", fields = "Depends")
+)
+@
+
+
+You need at least \R\ version \Sexpr{rversion} to run the \pkg{confidence}-tool. The latest version of \R\ can be downloaded from the Comprehensive \R\ Archive Network (CRAN) website as follows:
+\begin{enumerate}
+    \item navigate in a web-browser to \url{www.r-project.org};
+	\item select `CRAN' in the menu on the left;
+    \item select a download location (preferably a location close to you);
+    \item select the \R-version for your operating system, \textit{.e.g.}, \code{`Download R for Windows'};
+    \item Select `base';
+    \item Select \code{Download R x.y.z} (where x.y.z. is the version number, \textit{e.g.}, 3.1.1);
+    \item Double click on the downloaded file and follow the installation instructions on the screen. In case of doubt, simply select the default/recommended settings.
+\end{enumerate}
+
+
+\subsection{Starting the \R-program}
+
+On MS-Windows, \R\ ships with a graphical user interface (GUI). It can be started by double clicking the \R-icon.
+
+
+
+\subsection{Installation of the \pkg{confidence}-package}
+
+In the menu of the \R-console, select submenu \code{Install package(s)\dots} from main menu \code{Packages}. Select a download location (CRAN mirror), and select the \pkg{confidence}-package. \R\ will automatically install the \pkg{confidence}-package and all packages it depends on. 
+
+Note: Installation of the \pkg{confidence}-package has to be done only once. 
+
+
+
+
+\subsection{Loading the \pkg{confidence}-package}
+
+The \pkg{confidence}-package has to be loaded at the start of each new \R-session.
+Go to the menu of the \R-console, select submenu \code{Load Package...} from main menu \code{Packages} and select the \pkg{confidence}-package.
+
+
+As an alternative one may also type 
+
+<<eval=FALSE, echo=TRUE>>=
+library(confidence)
+@
+in the \R-console.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \section{Input data \label{sec:input}}
 
 As input, the tool needs a table containing annual arithmetic average concentrations of chemical parameters or ecological quality ratio's (EQRs). An example of such a table is given below. In this tutorial, required column names are given in upper-case, and optional column names in lower-case. The tool itself treats column names case-insensitive to minimize the risk of errors by users unfamiliar with case-sensitive software. Users are free to add additional columns. These will be ignored by the tool.

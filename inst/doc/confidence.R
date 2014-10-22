@@ -15,6 +15,16 @@ opts_chunk$set(
     warning = TRUE
 )
 
+## ----echo=FALSE----------------------------------------------------------
+rversion <- sub(
+    pattern = "R *\\(>= *([^)]*)\\).*", 
+    replacement = "\\1", 
+    x = packageDescription("confidence", fields = "Depends")
+)
+
+## ----eval=FALSE, echo=TRUE-----------------------------------------------
+#  library(confidence)
+
 ## ----results='asis', echo=FALSE------------------------------------------
 data(metal)
 metal$sampdev <- NULL

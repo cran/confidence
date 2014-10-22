@@ -38,8 +38,8 @@ _**`r packageDescription("confidence", fields = "Package")`** package version `r
 The table below gives for each object identifier and parameter:
 
 1. the multi-year arithmetic average (MYA);
-1. the probability (PROB_lt) that MYA is less than the target value (TARGET);
-1. the probability (PROB_gt) that MYA is greater than the target value (TARGET);
+1. the probability (PROB_LTT) that MYA is less than the target value (TARGET);
+1. the probability (PROB_GTT) that MYA is greater than the target value (TARGET);
 1. the lowerbound (q05) and upperbound (q95) of the 90% confidence interval of MYA
 
 ```{r, results='asis'}
