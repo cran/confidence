@@ -19,11 +19,7 @@
 #'      \item{transfrom: data transformation, i.e., log, logit, NA.}
 #'  }
 #'
-#'  @docType data
-#'  @keywords datasets
-#'  @name metal
-#'  @usage data(metal)
-NULL
+"metal"
 
 
 
@@ -46,13 +42,9 @@ NULL
 #'      \item{UNIT: measurement unit (\eqn{\mu g/l}{ug/l}).}
 #'  }
 #'
-#'  @docType data
-#'  @keywords datasets
-#'  @name DCA
-#'  @references Baggelaar, P., O. van Tongeren, R. Knoben, & W. van Loon, 2010. 
+#'  @source Baggelaar, P., O. van Tongeren, R. Knoben, & W. van Loon, 2010. 
 #'      Rapporteren van de betrouwbaarheid van KRW-beoordelingen. H2O 16, p.21--25
-#'  @usage data(DCA)
-NULL
+"DCA"
 
 
 
@@ -73,10 +65,6 @@ NULL
 #'      \item{transfrom: applied transform}
 #'  }
 #'
-#'  @docType data
-#'  @keywords datasets
-#'  @name EQR
-#'  @references Baggelaar, P., O. van Tongeren, R. Knoben, & W. van Loon, 2010. 
+#'  @source Baggelaar, P., O. van Tongeren, R. Knoben, & W. van Loon, 2010. 
 #'      Rapporteren van de betrouwbaarheid van KRW-beoordelingen. H2O 16, p.21--25
-#'  @usage data(EQR)
-NULL
+"EQR"

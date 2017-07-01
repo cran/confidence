@@ -1,11 +1,11 @@
-#'  Remove Redundant Spaces
+#' Remove Redundant Spaces
 #'
-#' 	This function removes redundant spaces from character vectors
+#' This function removes redundant spaces from character vectors
 #'
-#' 	@param x character vector
+#' @param x character vector
 #'
-#'  @return  character vector without trailing or multiple spaces
-#'  @examples stopifnot(confidence:::strip_spaces(" Hello  World  ") == "Hello World")
+#' @return  character vector without trailing or multiple spaces
+#' @examples stopifnot(confidence:::strip_spaces(" Hello  World  ") == "Hello World")
 strip_spaces <- 
 function(x) {
 	x <- gsub(pattern = " {2,}",   replacement = " ", x = x)
@@ -30,14 +30,14 @@ function(x) {
 }
 
 
-#'  Transformations
+#' Transformations
 #'  
-#'  Performs log or logit transformations.
+#' Performs log or logit transformations.
 #'
-#'  @param x value to transform
-#'  @param type type of transform (log, logit).
+#' @param x value to transform
+#' @param type type of transform (log, logit).
 #'
-#'  @return transformed value
+#' @return transformed value
 transform <- 
 function(x, type = c("identity", "log", "logit", "none", NA_character_)) {
     switch(
@@ -49,14 +49,14 @@ function(x, type = c("identity", "log", "logit", "none", NA_character_)) {
 }
 
 
-#'  Back-transformations
+#' Back-transformations
 #'  
-#'  Performs inverse log or logit transformations.
+#' Performs inverse log or logit transformations.
 #'
-#'  @param x value to back-transform
-#'  @param type type of transform (log, logit).
+#' @param x value to back-transform
+#' @param type type of transform (log, logit).
 #'
-#'  @return backtransformed value
+#' @return backtransformed value
 backtransform <- 
 function(x, type = c("identity", "log", "logit", "none", NA_character_)) {
     switch(
@@ -68,48 +68,46 @@ function(x, type = c("identity", "log", "logit", "none", NA_character_)) {
 }
 
 
-#'  Check Confidence data
+#' Check Confidence data
 #'
-#'     This function checks \code{data.frames} to be used by the confidence 
-#'     package. The format has been specified in Van Loon (2014) and should
-#'     contain the following columns:
-#'    \itemize{
-#' 		    \item{OBJECTID: water body code, e.g., NL89_os;}
-#'  	    \item{PAR: parameter, e.g., Cadmium;}
-#'  	    \item{DATE: date according to ISO 8601 (YYYY-mm-dd) for point values
-#'              or year YYYY for annual means;}
-#'          \item{VALUE: numerical value.}
-#'          \item{TARGET: target value for the European Water Framework 
-#'              Directive;}
-#'          \item{UNIT: measurement unit of PAR. This unit should be the same for all
-#'              records with the same PAR and is the same for both VALUE 
+#' This function checks \code{data.frames} to be used by the confidence 
+#' package. The format has been specified in Van Loon (2014) and should
+#' contain the following columns:
+#' \itemize{
+#'   \item{OBJECTID: water body code, e.g., NL89_os;}
+#'   \item{PAR: parameter, e.g., Cadmium;}
+#'   \item{DATE: date according to ISO 8601 (YYYY-mm-dd) for point values
+#'               or year YYYY for annual means;}
+#'   \item{VALUE: numerical value.}
+#'   \item{TARGET: target value for the European Water Framework Directive;}
+#'   \item{UNIT: measurement unit of PAR. This unit should be the same for all
+#'               records with the same PAR and is the same for both VALUE 
 #'              and TARGET;}
-#'          \item{transform: data transformation, i.e., log, logit, NA.}
-#'      }
+#'   \item{transform: data transformation, i.e., log, logit, NA.}
+#' }
 #'
-#'  @details The function performs the following tasks:
-#' 	    \itemize{
-#'  	    \item{checks availablitity of required columns (case insensitive);}
-#'          \item{make column names case-insensitive;}
-#'  	    \item{removes redundant spaces;}
-#'          \item{checks on missing values in required columns;}
-#'          \item{checks if DATE-field adheres to ISO 8601 (YYYY-mm-dd) or YYYY;}
-#'          \item{checks mixtures of annual averages and point values for a each year;}
-#'          \item{checks if measurement units are the same for a specific 
-#'              OBJECTID-PAR-pair;}
-#'          \item{checks if TARGET-value is the same for a specific 
-#'              OBJECTID-PAR-pair;}
-#'          \item{checks if transform is one of log, logit, NA in transform column;}
-#'          \item{checks that the EQR-column contains identical values fo each
-#'              OBJECTID-PAR combination.}
-#'          
-#'      }
+#' @details The function performs the following tasks:
+#' \itemize{
+#'   \item{checks availablitity of required columns (case insensitive);}
+#'   \item{make column names case-insensitive;}
+#'   \item{removes redundant spaces;}
+#'   \item{checks on missing values in required columns;}
+#'   \item{checks if DATE-field adheres to ISO 8601 (YYYY-mm-dd) or YYYY;}
+#'   \item{checks mixtures of annual averages and point values for a each year;}
+#'   \item{checks if measurement units are the same for a specific 
+#'          OBJECTID-PAR-pair;}
+#'   \item{checks if TARGET-value is the same for a specific 
+#'           OBJECTID-PAR-pair;}
+#'   \item{checks if transform is one of log, logit, NA in transform column;}
+#'   \item{checks that the EQR-column contains identical values fo each
+#'          OBJECTID-PAR combination.}
+#' }
 #'      
-#'  @param x \code{data.frame} to be checked
+#' @param x \code{data.frame} to be checked
 #'      
-#'  @return \code{data.frame} that has passed all checks
+#' @return \code{data.frame} that has passed all checks
 #'  
-#'  @export
+#' @export
 #'  
 conf_input <- function(x) {
 
@@ -262,7 +260,7 @@ conf_input <- function(x) {
 #' 
 #' @seealso \code{\link{conf}}
 #'
-#'  @export
+#' @export
 mya <- function(x, ...) {
     UseMethod("mya")
 }
@@ -452,7 +450,7 @@ plot.mya <- function(x, which, ...) {
             hjust = 1.2,
             vjust = -0.1
         ) +
-        scale_x_continuous(name = "multiyear average") +
+        scale_x_continuous(name = "multi-year average") +
         scale_y_continuous(name = "confidence density") +
         theme(legend.position = "none") +
         ggtitle(label = paste(x$OBJECTID, x$PAR, x$PERIOD, paste("target", x$TARGET), sep = "; "))

@@ -112,7 +112,7 @@ opts_chunk$set(
 
 \section{Introduction}
 
-This tutorial provides a brief introduction to the \pkg{confidence}-package. This package can be used to estimate the confidence of state classifications (\eg, with the classification `bad', `moderate', `good') produced using environmental indicators and associated targets. The implementation closely follows Baggelaar \textit{et al.} (2010) where confidence intervals for the estimated multiyear averages are derived by assuming a Student's $t$ distribution for the errors.
+This tutorial provides a brief introduction to the \pkg{confidence}-package. This package can be used to estimate the confidence of state classifications (\eg, with the classification `bad', `moderate', `good') produced using environmental indicators and associated targets. The implementation closely follows Baggelaar \textit{et al.} (2010) where confidence intervals for the estimated multi-year averages are derived by assuming a Student's $t$ distribution for the errors.
 
 
 
@@ -240,7 +240,7 @@ conf()
 @
 
 
-on the R-prompt. This will launch an interactive file selection dialogue that asks for the name of the comma separated values file (CSV) containing the input data. The format of this file is given in Section~\ref{sec:input}. After checking the contents of this file, the tool will estimate for each \code{OBJECTID} and \code{PAR}, the multiyear average of \code{VALUE}, the probability that this average exceeds \code{TARGET}, and the 90\% confidence interval of this average. These results are reported as an HTML-document and a CSV-file. Both are stored in the same directory as the input file in a directory called `output' with the current date-time stamp as postfix. This should prevent accidentally overwriting previous results. For example, if the name of the input file is
+on the R-prompt. This will launch an interactive file selection dialogue that asks for the name of the comma separated values file (CSV) containing the input data. The format of this file is given in Section~\ref{sec:input}. After checking the contents of this file, the tool will estimate for each \code{OBJECTID} and \code{PAR}, the multi-year average of \code{VALUE}, the probability that this average exceeds \code{TARGET}, and the 90\% confidence interval of this average. These results are reported as an HTML-document and a CSV-file. Both are stored in the same directory as the input file in a directory called `output' with the current date-time stamp as postfix. This should prevent accidentally overwriting previous results. For example, if the name of the input file is
 
 <<eval=FALSE>>=
 "my_directory/my_input_file.csv"
@@ -308,7 +308,7 @@ print(
 )
 @
 
-This table gives for each \code{OBJECTID}, \code{PAR}, and \code{PERIOD}, the multiyear average (\code{MYA}), the lower bound (\code{q05}) and upper bound (\code{q95}) of the confidence interval of \code{MYA}, and the probability that \code{MYA} is greater (\code{PROB\_gt}) or less (\code{PROB\_lt}) than \code{TARGET}. These data are also given in the figure below.
+This table gives for each \code{OBJECTID}, \code{PAR}, and \code{PERIOD}, the multi-year average (\code{MYA}), the lower bound (\code{q05}) and upper bound (\code{q95}) of the confidence interval of \code{MYA}, and the probability that \code{MYA} is greater (\code{PROB\_gt}) or less (\code{PROB\_lt}) than \code{TARGET}. These data are also given in the figure below.
 
 <<dev='pdf',fig.width=7, fig.height=4, out.width='0.8\\textwidth', echo=FALSE>>=
 plot(x)
