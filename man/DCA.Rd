@@ -4,9 +4,9 @@
 \name{DCA}
 \alias{DCA}
 \title{Annual Average 1,2-dichloroethane Concentration}
-\format{An object of class \code{data.frame} with 3 rows and 10 columns.}
-\usage{
-DCA
+\source{
+Baggelaar, P., O. van Tongeren, R. Knoben, & W. van Loon, 2010. 
+   Rapporteren van de betrouwbaarheid van KRW-beoordelingen. H2O 16, p.21--25
 }
 \description{
 Annual arithmetic average concentration of 1,2-dichloroethane (DCA) in
@@ -14,17 +14,13 @@ a specific water body (\eqn{\mu g/l}{ug/l}), based on Baggelaar et al., (2010)
 }
 \details{
 The columns represent the following information:
- \itemize{
-     \item{OBJECTID: water body code}
-     \item{PAR: parameter, in this case 1,2-dichloroethane;}
-     \item{color: colors in density function;}
-     \item{DATE: year;}
-     \item{VALUE: annual arithmetic average concentration}
-     \item{TARGET: target according to the European Water Framework Directive;}
-     \item{UNIT: measurement unit (\eqn{\mu g/l}{ug/l}).}
- }
-
-@source Baggelaar, P., O. van Tongeren, R. Knoben, & W. van Loon, 2010. 
-     Rapporteren van de betrouwbaarheid van KRW-beoordelingen. H2O 16, p.21--25
+\describe{
+  \item{OBJECTID}{water body code}
+  \item{PAR}{parameter, in this case 1,2-dichloroethane}
+  \item{color}{colors in density function}
+  \item{DATE}{year}
+  \item{VALUE}{annual arithmetic average concentration}
+  \item{TARGET}{target according to the European Water Framework Directive}
+  \item{UNIT}{measurement unit (\eqn{\mu g/l}{ug/l})}
 }
-\keyword{datasets}
+}

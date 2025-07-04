@@ -14,13 +14,13 @@ that can be coerced to an instance of class \code{\link{conf_input}}.}
 }
 \value{
 a \code{\link{data.frame}} with the following columns:
-\itemize{
-    	\item{\code{MYA}: }{the multi-year arithmetic average;}
- 	\item{\code{PROB_LTT}: }{the probability that \code{MYA} is less than the target value specified;}
- 	\item{\code{PROB_GTT}: }{the probability that \code{MYA} is greater than the target value specified;}
-     \item{\code{q05}: }{the lowerbound of the 90\% confidence interval of \code{MYA}}
-     \item{\code{q95}: }{the upperbound of the 90\% confidence interval of \code{MYA}}
- }
+\describe{
+  \item{\code{MYA}: }{the multi-year arithmetic average;}
+  \item{\code{PROB_LTT}: }{the probability that \code{MYA} is less than the target value specified;}
+  \item{\code{PROB_GTT}: }{the probability that \code{MYA} is greater than the target value specified;}
+  \item{\code{q05}: }{the lowerbound of the 90\% confidence interval of \code{MYA};}
+  \item{\code{q95}: }{the upperbound of the 90\% confidence interval of \code{MYA}.}
+}
 }
 \description{
 Estimates the multi-year average of environmental properties and

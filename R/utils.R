@@ -250,13 +250,13 @@ conf_input <- function(x) {
 #' @param \dots further arguments to be passed to other methods
 #' 
 #' @return a \code{\link{data.frame}} with the following columns:
-#' \itemize{
-#'     	\item{\code{MYA}: }{the multi-year arithmetic average;}
-#'  	\item{\code{PROB_LTT}: }{the probability that \code{MYA} is less than the target value specified;}
-#'  	\item{\code{PROB_GTT}: }{the probability that \code{MYA} is greater than the target value specified;}
-#'      \item{\code{q05}: }{the lowerbound of the 90\% confidence interval of \code{MYA}}
-#'      \item{\code{q95}: }{the upperbound of the 90\% confidence interval of \code{MYA}}
-#'  }
+#' \describe{
+#'   \item{\code{MYA}: }{the multi-year arithmetic average;}
+#'   \item{\code{PROB_LTT}: }{the probability that \code{MYA} is less than the target value specified;}
+#'   \item{\code{PROB_GTT}: }{the probability that \code{MYA} is greater than the target value specified;}
+#'   \item{\code{q05}: }{the lowerbound of the 90\% confidence interval of \code{MYA};}
+#'   \item{\code{q95}: }{the upperbound of the 90\% confidence interval of \code{MYA}.}
+#' }
 #' 
 #' @seealso \code{\link{conf}}
 #'
@@ -458,23 +458,30 @@ plot.mya <- function(x, which, ...) {
 
 
 
-
+#' Internal Functions For Writing HTML
+#'
+#' @param x object
+#' @param \dots  further arguments passed to or from other methods.
+#' @export
 write_html <- function(x, ...) {
     UseMethod("write_html")
 }
 
+#' @export
 write_html.character <- function(x, outputDir, browse = TRUE, ...) {
     write_html(x = conf_input(x), outputDir = outputDir, browse = browse)
 }
 
+#' @export
 write_html.data.frame <- function(x, outputDir, browse = TRUE, ...) {
     write_html(x = conf_input(x), outputDir = outputDir, browse = browse)
 }
 
+#' @export
 write_html.conf_input <- function(x, outputDir, browse = TRUE, ...) {
 
-    # create temporary directory
-    tmpdir <- tempfile(pattern = "confidence")
+  # create temporary directory
+  tmpdir <- tempfile(pattern = "confidence")
 	dir.create(path = tmpdir)
 
 	# copy template of report to temporary directory
@@ -483,34 +490,33 @@ write_html.conf_input <- function(x, outputDir, browse = TRUE, ...) {
 		pattern = "\\.Rmd$", full.names = TRUE)
 	file.copy(from = templates, to = tmpdir)
     
-    # create Markdown document 
-    # (code below works better than knit2html, see BEQI2)
-    owd <- setwd(tmpdir)
-    on.exit(setwd(owd), add = TRUE)
+  # create Markdown document 
+  # (code below works better than knit2html, see BEQI2)
+  owd <- setwd(tmpdir)
+  on.exit(setwd(owd), add = TRUE)
 	suppressMessages(
         res <- try(knit(input = "confidence.Rmd", quiet = TRUE), silent = TRUE)
-    )
-    if (inherits(res, "try-error")) {
-        stop(toString(attr(res, "condition")$message), call. = FALSE)
-    }
+  )
+  if (inherits(res, "try-error")) {
+      stop(toString(attr(res, "condition")$message), call. = FALSE)
+  }
 	markdownToHTML(
 		file  = "confidence.md", 
 		output = "output.html",
         options = c("use_xhtml", "smartypants", "mathjax", "highlight_code"),
-        extensions = getOption("markdown.extensions"),
     	title = "Confidence Report",
         stylesheet = system.file("css", "confidence.css", 
                                  package = "confidence")
 	)
 
-    # copy all files from the temporary directory to the output directory
-    if (!file.exists(outputDir)) {
-        dir.create(path = outputDir, recursive = TRUE)
-    }
-    tmpfiles <- list.files(path = tmpdir, pattern = "\\.html$|\\.png$", 
-                           recursive = TRUE)
-    file.copy(from = tmpfiles, to = outputDir)
-    
+  # copy all files from the temporary directory to the output directory
+  if (!file.exists(outputDir)) {
+      dir.create(path = outputDir, recursive = TRUE)
+  }
+  tmpfiles <- list.files(path = tmpdir, pattern = "\\.html$|\\.png$", 
+                         recursive = TRUE)
+  file.copy(from = tmpfiles, to = outputDir)
+
 	# view result
 	if (isTRUE(browse)) {
 		browseURL(file.path(outputDir, "output.html"))

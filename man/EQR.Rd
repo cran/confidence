@@ -4,9 +4,9 @@
 \name{EQR}
 \alias{EQR}
 \title{Annual Average Environmental Quality Ratio for Macrofauna.}
-\format{An object of class \code{data.frame} with 3 rows and 11 columns.}
-\usage{
-EQR
+\source{
+Baggelaar, P., O. van Tongeren, R. Knoben, & W. van Loon, 2010. 
+  Rapporteren van de betrouwbaarheid van KRW-beoordelingen. H2O 16, p.21--25
 }
 \description{
 Annual artithmetic average environmental quality ratio's (EQR) for Macrofauna
@@ -14,17 +14,13 @@ in a specific water body, based on Baggelaar et al., (2010)
 }
 \details{
 The columns represent the following information:
- \itemize{
-     \item{OBJECTID: water body code}
-     \item{PAR: parameter, in this case EQR;}
-     \item{color: colors in density function;}
-     \item{DATE: year;}
-     \item{VALUE: annual arithmetic average EQR}
-     \item{TARGET: target EQR;}
-     \item{transfrom: applied transform}
- }
-
-@source Baggelaar, P., O. van Tongeren, R. Knoben, & W. van Loon, 2010. 
-     Rapporteren van de betrouwbaarheid van KRW-beoordelingen. H2O 16, p.21--25
+\describe{
+  \item{OBJECTID}{water body code}
+  \item{PAR}{parameter, in this case EQR}
+  \item{color}{colors in density function}
+  \item{DATE}{year}
+  \item{VALUE}{annual arithmetic average EQR}
+  \item{TARGET}{target EQR}
+  \item{transfrom}{applied transform}
 }
-\keyword{datasets}
+}

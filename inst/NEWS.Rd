@@ -2,9 +2,16 @@
 
 \title{News for Package \pkg{'confidence'}}
 
+\section{Changes in version 1.1-3 (2025-07-05)}{
+  \itemize{
+    \item minor changes to documentation to remove notes from CRAN-check
+    \item removed deprecated extensions-argument from markdownToHTML
+  }
+}
+
 \section{Changes in version 1.1-2 (2017-07-01)}{
   \itemize{
-    \item minor changes to remove notes from CRAN-check)
+    \item minor changes to remove notes from CRAN-check
   }
 }
 
